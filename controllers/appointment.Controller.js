@@ -54,7 +54,7 @@ exports.BookingSlots = async(req, res)=>{
       .container {
         max-width: 600px;
         width: 100%;
-        background-color: rgb(209, 204, 204);
+        background-color: #F1F5F9;
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         padding: 20px;
