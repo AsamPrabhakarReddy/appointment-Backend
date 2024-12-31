@@ -4,10 +4,7 @@ const dotenv = require("dotenv");
 const connectDB = require('./config/db.js')
 const cors = require("cors");
 const slotRoutes = require("./Routes/appointment.Route"); 
-// Load environment variables
 dotenv.config();
-
-
 
 // Connect to MongoDB
 connectDB();
