@@ -7,7 +7,7 @@ exports.BookingSlots = async(req, res)=>{
     
   try {
     const { selectedSlot, formData } = req.body;
-    const formattedDate = selectedSlot.date;
+    const formattedDate = new Date(selectedSlot.date);
     const newSlot = new Slot({
       date: formattedDate,
       time: selectedSlot.time,
@@ -100,6 +100,24 @@ exports.BookingSlots = async(req, res)=>{
         color: #AE275F;
         margin-top: 20px;
       }
+    .btn-cancel-reschedule {
+      background-color: #28a745;  
+      color: white;             
+      font-weight: bold;        
+      padding: 8px 16px;        
+      border: none;             
+      border-radius: 5px;       
+      cursor: pointer;          
+      font-size: 14px;          
+      margin-left: 15px; 
+      margin-right: 5px;        
+    }
+
+  .btn-cancel-reschedule:hover {
+    opacity: 0.9;
+  }
+
+
     </style>
   </head>
   <body>
@@ -111,18 +129,25 @@ exports.BookingSlots = async(req, res)=>{
 
       <!-- Booking Confirmation -->
       <div class="content">
-        <p class="confirmation">Your booking has been confirmed!</p>
+        <p class="confirmation">Your Consultation is Confirmed!</p>
       </div>
 
       <!-- Booking Details -->
-      <div class="details">
+     <div class="details">
         <div class="field">Service: Immigration Consultation 1 hour</div>
         <div class="field">Staff Member: Mannam & Associates, LLC [Attorney / Paralegal]</div>
-        <div class="field">Date: ${date}</div>
-        <div class="field">Time: ${time}</div>
+        
+        <!-- Date and Time field with the button -->
+        <div class="field">
+          Date: ${date} at ${time}
+          <button class="btn-cancel-reschedule">Cancel / Reschedule</button>
+        </div>
+
         <div class="field">Name: ${name}</div>
         <div class="field">Email: ${email}</div>
       </div>
+
+
 
       <!-- Footer -->
       <div class="footer">
