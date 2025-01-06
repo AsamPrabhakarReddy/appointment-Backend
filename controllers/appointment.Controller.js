@@ -116,6 +116,7 @@ exports.BookingSlots = async(req, res)=>{
   .btn-cancel-reschedule:hover {
     opacity: 0.9;
   }
+    
 
 
     </style>
@@ -170,6 +171,9 @@ exports.BookingSlots = async(req, res)=>{
     });
 
     
+
+  
+
     // Send confirmation email
     // sendMail(
     //   email,
@@ -293,3 +297,116 @@ exports.BookingSlots = async(req, res)=>{
   }
 } 
 
+
+
+exports.getDataById = async (req, res) => {
+  const { Id } = req.body;  
+  if (!Id) {
+      return res.status(400).json({ message: "Id is required" });
+  }
+
+  try {
+      const results = await Slot.findById(Id);
+      if (!results) {
+          return res.status(404).json({ message: "No data found for the given ID" });
+      }
+      res.status(200).json(results);
+  } catch (error) {
+      
+      console.error("Got error while fetching data by id", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+exports.getDataByEmail = async (req, res) => {
+  const { email } = req.body;  
+  if (!email) {
+      return res.status(400).json({ message: "email is required" });
+  }
+
+  try {
+      const results = await Slot.findOne({email});
+      if (!results) {
+          return res.status(404).json({ message: "No data found for the given email" });
+      }
+      res.status(200).json(results);
+  } catch (error) {
+      
+      console.error("Got error while fetching data by id", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+exports.getDataByTime = async (req, res) => {
+  const { time } = req.body;  
+  if (!time) {
+      return res.status(400).json({ message: "time is required" });
+  }
+
+  try {
+      const results = await Slot.findOne({time});
+      if (!results) {
+          return res.status(404).json({ message: "No data found for the given time" });
+      }
+      res.status(200).json(results);
+  } catch (error) {
+      
+      console.error("Got error while fetching data by id", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.getData = async (req, res) => {
+  const { Id, email, time } = req.body;
+
+  // Check if at least one parameter is provided
+  if (!Id && !email && !time) {
+    return res.status(400).json({ message: "At least one parameter (Id, email, or time) is required" });
+  }
+
+  try {
+    let results;
+
+    // Check if Id exists in the database before querying by Id
+    if (Id) {
+      const idExists = await Slot.exists({ _id: Id });
+      if (!idExists) {
+        return res.status(404).json({ message: "No data found for the given ID" });
+      }
+      results = await Slot.findById(Id);
+    }
+
+    // Check if email exists in the database before querying by email
+    if (email && !results) {
+      const emailExists = await Slot.exists({ email: email.trim() });  // Ensure email is trimmed
+      if (!emailExists) {
+        return res.status(404).json({ message: "No data found for the given email" });
+      }
+      results = await Slot.findOne({ email: email.trim() });
+    }
+
+    // Check if time exists in the database before querying by time
+    if (time && !results) {
+      const timeExists = await Slot.exists({ time: time });
+      if (!timeExists) {
+        return res.status(404).json({ message: "No data found for the given time" });
+      }
+      results = await Slot.findOne({ time: time });
+    }
+
+    // If no results were found after checking all parameters
+    if (!results) {
+      return res.status(404).json({ message: "No data found for the provided parameters" });
+    }
+
+    // Send the results back
+    res.status(200).json(results);
+
+  } catch (error) {
+    console.error("Got error while fetching data", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
