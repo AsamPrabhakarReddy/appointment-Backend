@@ -6,13 +6,18 @@ const nodemailer = require("nodemailer");
 exports.BookingSlots = async(req, res)=>{
     
   try {
-    const { selectedSlot, formData } = req.body;
+    const { selectedSlot, formData, service,staffMember } = req.body;
+    console.log(selectedSlot);
+    console.log(formData);
+    console.log(service);
     const formattedDate = new Date(selectedSlot.date);
     const newSlot = new Slot({
       date: formattedDate,
       time: selectedSlot.time,
       name: formData.name,
-      email: formData.email
+      email: formData.email,
+      service:service,
+      staffMember:staffMember
     });
 
     // Save to database
@@ -21,7 +26,7 @@ exports.BookingSlots = async(req, res)=>{
     // Extract values from formData and selectedSlot
     const { name, email } = formData;
     const { date, time } = selectedSlot;
-
+ 
     const transporter = nodemailer.createTransport({
       host: "mail.clouddatanetworks.com",
       port: 465,
@@ -37,128 +42,121 @@ exports.BookingSlots = async(req, res)=>{
       to: email,
       subject: `Confirmed: Immigration Consultation @ ${date}, ${time}`,
       html: `<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f9fafb;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-      }
+              <html>
+                <head>
+                  <style>
+                    body {
+                      font-family: Arial, sans-serif;
+                      background-color: #f9fafb;
+                      margin: 0;
+                      padding: 0;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      min-height: 100vh;
+                    }
 
-      .container {
-        max-width: 600px;
-        width: 100%;
-        background-color: #F1F5F9;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        text-align: center;
-      }
+                    .container {
+                      max-width: 600px;
+                      width: 100%;
+                      background-color: #F1F5F9;
+                      border-radius: 8px;
+                      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                      padding: 20px;
+                      text-align: center;
+                    }
 
-      .header h1 {
-        font-size: 24px;
-        color: #AE275F; /* Unique color for "MANNAM AND ASSOCIATES" */
-        margin-bottom: 20px;
-      }
+                    .header h1 {
+                      font-size: 24px;
+                      color: #AE275F; /* Unique color for "MANNAM AND ASSOCIATES" */
+                      margin-bottom: 20px;
+                    }
 
-      .content p.confirmation {
-        font-size: 20px;
-        color: #AE275F; /* Unique color for "Your booking has been confirmed!" */
-        margin: 20px 0;
-        font-weight: bold;
-      }
+                    .content p.confirmation {
+                      font-size: 20px;
+                      color: #AE275F; /* Unique color for "Your booking has been confirmed!" */
+                      margin: 20px 0;
+                      font-weight: bold;
+                    }
 
-      .details {
-        margin: 20px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-      }
+                    .details {
+                      margin: 20px 0;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 15px;
+                    }
 
-      .details .field {
-        width: 80%;
-        background-color: #f5f5f5;
-        padding: 10px 15px;
-        border: 1px solid #dddddd;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-size: 16px;
-        color: #333333;
-        font-weight: bold;
-      }
+                    .details .field {
+                      width: 80%;
+                      background-color: #f5f5f5;
+                      padding: 10px 15px;
+                      border: 1px solid #dddddd;
+                      border-radius: 5px;
+                      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                      text-align: center;
+                      font-size: 16px;
+                      color: #333333;
+                      font-weight: bold;
+                    }
 
-      .footer p {
-        font-size: 14px;
-        color: #AE275F;
-        margin-top: 20px;
-      }
-    .btn-cancel-reschedule {
-      background-color: #28a745;  
-      color: white;             
-      font-weight: bold;        
-      padding: 8px 16px;        
-      border: none;             
-      border-radius: 5px;       
-      cursor: pointer;          
-      font-size: 14px;          
-      margin-left: 15px; 
-      margin-right: 5px;        
-    }
+                    .footer p {
+                      font-size: 14px;
+                      color: #AE275F;
+                      margin-top: 20px;
+                    }
+                  .btn-cancel-reschedule {
+                    background-color: #28a745;  
+                    color: white;             
+                    font-weight: bold;        
+                    padding: 8px 16px;        
+                    border: none;             
+                    border-radius: 5px;       
+                    cursor: pointer;          
+                    font-size: 14px;          
+                    margin-left: 15px; 
+                    margin-right: 5px;        
+                  }
 
-  .btn-cancel-reschedule:hover {
-    opacity: 0.9;
-  }
-    
+                .btn-cancel-reschedule:hover {
+                  opacity: 0.9;
+                }  
+                </style>
+                </head>
+                <body>
+                  <div class="container">
+                    <!-- Header -->
+                    <div class="header">
+                      <h1>MANNAM AND ASSOCIATES</h1>
+                    </div>
 
+                    <!-- Booking Confirmation -->
+                    <div class="content">
+                      <p class="confirmation">Your Consultation is Confirmed!</p>
+                    </div>
 
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <!-- Header -->
-      <div class="header">
-        <h1>MANNAM AND ASSOCIATES</h1>
-      </div>
-
-      <!-- Booking Confirmation -->
-      <div class="content">
-        <p class="confirmation">Your Consultation is Confirmed!</p>
-      </div>
-
-      <!-- Booking Details -->
-     <div class="details">
-        <div class="field">Service: Immigration Consultation 1 hour</div>
-        <div class="field">Staff Member: Mannam & Associates, LLC [Attorney / Paralegal]</div>
-        
-        <!-- Date and Time field with the button -->
-        <div class="field">
-          Date: ${date} at ${time}
-          <button class="btn-cancel-reschedule">Cancel / Reschedule</button>
-        </div>
-
-        <div class="field">Name: ${name}</div>
-        <div class="field">Email: ${email}</div>
-      </div>
-
-
-
-      <!-- Footer -->
-      <div class="footer">
-        <p>- Team Syndèo</p>
-      </div>
-    </div>
-  </body>
-</html>
-
-`,
+                    <!-- Booking Details -->
+                  <div class="details">
+                      <div class="field">Service: ${service}</div>
+                      <div class="field">Staff Member: ${staffMember}</div>
+                      
+                      <!-- Date and Time field with the button -->
+                      <div class="field">
+                        Date: ${date} at ${time}
+                        <button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/">Cancel / Reschedule </a> </button>
+                      </div>
+                  
+                      <div class="field">Name: ${name}</div>
+                      <div class="field">Email: ${email}</div>
+                    </div>
+                    <!-- Footer -->
+                    <div class="footer">
+                      <p>- Team Syndèo</p>
+                    </div>
+                  </div>
+                </body>
+              </html>
+        `,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -171,118 +169,6 @@ exports.BookingSlots = async(req, res)=>{
     });
 
     
-
-  
-
-    // Send confirmation email
-    // sendMail(
-    //   email,
-    //   `Confirmed: Immigration Consultation @ ${date}, ${time}`,
-    //   `Hi, ${name}. Thanks for booking the slot.`,
-    //   `<!DOCTYPE html>
-    //   <html>
-    //     <head>
-    //       <style>
-    //       body {
-    //         font-family: Arial, sans-serif;
-    //         height: 100%;
-    //         width: 100%;
-    //       }
-
-    //       .container {
-    //         max-width: 600px;
-    //         margin: 0 auto;
-    //         padding: 20px;
-    //         background-color: #fff;
-    //         border-radius: 5px;
-    //         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    //       }
-
-    //         .header {
-    //           text-align: center;
-    //           margin-bottom: 20px;
-    //         }
-
-    //         .header h1 {
-    //           color: #333;
-    //           font-size: 22px;
-    //           font-weight: 600;
-    //           text-align: center;
-    //         }
-
-    //         .content {
-    //           margin-bottom: 30px;
-    //         }
-
-    //         .content p {
-    //           margin: 0 0 10px;
-    //           line-height: 1.5;
-    //         }
-
-    //         .content #para p {
-    //           margin-top: 20px;
-    //         }
-
-    //         .content .button {
-    //           text-align: center;
-    //           display: flex;
-    //           justify-content: center;
-    //           align-items: center;
-    //           margin-top: 20px;
-    //           margin-bottom: 20px;
-    //         }
-
-    //         .content .button a {
-    //           border-radius: 40px;
-    //           padding-top: 16px;
-    //           padding-bottom: 16px;
-    //           padding-left: 100px;
-    //           padding-right: 100px;
-    //           background-color: #007ae1;
-    //           text-decoration: none;
-    //           color: white;
-    //           font-weight: 600;
-    //         }
-
-    //         /* .footer {
-    //           text-align: center;
-    //         } */
-
-    //         .footer p {
-    //           color: #999;
-    //           font-size: 14px;
-    //           margin: 0;
-    //           margin-top: 8px;
-    //           margin-bottom: 8px;
-    //         }
-    //       </style>
-    //     </head>
-    //     <body>
-    //       <div class="container">
-    //         <div class="header content ">
-    //           <h1>MANNAM AND ASSOCIATES</h1>
-    //         </div>
-    //         <div class="content ">
-    //           <p styles="text-center "class="content">
-    //               Your booking has been confirmed!
-    //           </p>
-                 
-    //           <div>
-    //               <p> Date: ${date}</p>
-    //               <p>Time : ${time} </h1>
-    //               <h1>Name: ${name}</h1>
-    //               <h1>Email : ${email} </h1>
-    //           </div>
-    //         </div>
-    //         <p>Thanks for helping to keep Syndèo secure!</p>
-    //         <div class="footer">
-    //           <p>Team Syndèo</p>
-    //         </div>
-    //       </div>
-    //     </body>
-    //   </html>`
-    // );
-
     // Respond with success message
     res.status(201).json({
       message: 'Slot saved successfully',
@@ -359,54 +245,17 @@ exports.getDataByTime = async (req, res) => {
   }
 };
 
-exports.getData = async (req, res) => {
-  const { Id, email, time } = req.body;
 
-  // Check if at least one parameter is provided
-  if (!Id && !email && !time) {
-    return res.status(400).json({ message: "At least one parameter (Id, email, or time) is required" });
+
+exports.getDateAndSlots = async(req, res)=>{
+
+  try{
+    const results = await Slot.find();
+    res.status(201).json({message: "fetched successfully", results});
+
+  }catch(error){
+     console.log("Error while fetching the time slots", error);
+     res.send(404).json({message: "rror while fetching the time slots", error});
   }
+}
 
-  try {
-    let results;
-
-    // Check if Id exists in the database before querying by Id
-    if (Id) {
-      const idExists = await Slot.exists({ _id: Id });
-      if (!idExists) {
-        return res.status(404).json({ message: "No data found for the given ID" });
-      }
-      results = await Slot.findById(Id);
-    }
-
-    // Check if email exists in the database before querying by email
-    if (email && !results) {
-      const emailExists = await Slot.exists({ email: email.trim() });  // Ensure email is trimmed
-      if (!emailExists) {
-        return res.status(404).json({ message: "No data found for the given email" });
-      }
-      results = await Slot.findOne({ email: email.trim() });
-    }
-
-    // Check if time exists in the database before querying by time
-    if (time && !results) {
-      const timeExists = await Slot.exists({ time: time });
-      if (!timeExists) {
-        return res.status(404).json({ message: "No data found for the given time" });
-      }
-      results = await Slot.findOne({ time: time });
-    }
-
-    // If no results were found after checking all parameters
-    if (!results) {
-      return res.status(404).json({ message: "No data found for the provided parameters" });
-    }
-
-    // Send the results back
-    res.status(200).json(results);
-
-  } catch (error) {
-    console.error("Got error while fetching data", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};

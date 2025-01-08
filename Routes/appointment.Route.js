@@ -7,5 +7,6 @@ router.post('/getDataById', appointmentController.getDataById);
 router.post('/getDataByEmail', appointmentController.getDataByEmail);
 router.post('/getDataByTime', appointmentController.getDataByTime);
 router.post('/getData', appointmentController.getDataByTime);
+router.get('/getDateAndSlots', appointmentController.getDateAndSlots);
 
 module.exports = router;
