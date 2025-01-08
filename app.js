@@ -15,13 +15,13 @@ const app = express();
 // Middlewares
 app.use(express.json());
 
-const corsOptions = {
-  origin: 'https://mannam-syndeo-ui.vercel.app/', // Allow specific origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific HTTP methods
-  credentials: true // Include credentials if needed
-};
+// const corsOptions = {
+//   origin: 'https://mannam-syndeo-ui.vercel.app/', // Allow specific origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific HTTP methods
+//   credentials: true // Include credentials if needed
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.json());
 
 // Use the slotRoutes
