@@ -26,7 +26,7 @@ exports.BookingSlots = async(req, res)=>{
     // Extract values from formData and selectedSlot
     const { name, email } = formData;
     const { date, time } = selectedSlot;
-    const { _id: slotId } = newSlot; 
+    const { _id: appointmentId } = newSlot; 
     const transporter = nodemailer.createTransport({
       host: "mail.clouddatanetworks.com",
       port: 465,
@@ -141,11 +141,12 @@ exports.BookingSlots = async(req, res)=>{
                       <div class="field">Staff Member: ${staffMember}</div>
                       
                       <!-- Date and Time field with the button -->
-                      <div class="field">
-                        Date: ${date} at ${time}
-                        <button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule">Cancel / Reschedule </a> </button>
-                      </div>
-                      <div class="field">Id: ${slotId}</div>
+                      ${appointmentId ? (
+                        `<button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule/${appointmentId}">Cancel / Reschedule</a></button>`
+                      ) : (
+                        `<button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule">Cancel / Reschedule</a></button>`
+                      )}
+                      <div class="field">Id: ${appointmentId}</div>
                       <div class="field">Name: ${name}</div>
                       <div class="field">Email: ${email}</div>
                     </div>
