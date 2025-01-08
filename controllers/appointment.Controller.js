@@ -186,67 +186,48 @@ exports.BookingSlots = async(req, res)=>{
 
 
 
+//  getting data by appointmentId
 exports.getDataById = async (req, res) => {
-  const { Id } = req.body;  
+  const { Id } = req.body; 
+  
   if (!Id) {
-      return res.status(400).json({ message: "Id is required" });
+    return res.status(400).json({ message: "Id is required" });
   }
 
   try {
-      const results = await Slot.findById(Id);
-      if (!results) {
-          return res.status(404).json({ message: "No data found for the given ID" });
-      }
-      res.status(200).json(results);
+    const results = await Slot.findById(Id);  
+    if (!results) {
+      return res.status(404).json({ message: "No data found for the given ID" });
+    }
+    res.status(200).json(results);  
   } catch (error) {
-      
-      console.error("Got error while fetching data by id", error);
-      res.status(500).json({ message: "Internal server error" });
+    console.error("Error fetching data by id", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 
-exports.getDataByEmail = async (req, res) => {
-  const { email } = req.body;  
-  if (!email) {
-      return res.status(400).json({ message: "email is required" });
+// Delete the data from db
+
+exports.deleteAppointment = async (req, res) => {
+  const { Id } = req.body;
+
+  if (!Id) {
+    return res.status(400).json({ message: "Id is required" });
   }
 
   try {
-      const results = await Slot.findOne({email});
-      if (!results) {
-          return res.status(404).json({ message: "No data found for the given email" });
-      }
-      res.status(200).json(results);
+    const deletedSlot = await Slot.findByIdAndDelete(Id);
+
+    if (!deletedSlot) {
+      return res.status(404).json({ message: "No data found for the given ID" });
+    }
+    res.status(200).json({ message: "Appointment canceled successfully", deletedSlot });
   } catch (error) {
-      
-      console.error("Got error while fetching data by id", error);
-      res.status(500).json({ message: "Internal server error" });
+    console.error("Error deleting appointment", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
-
-exports.getDataByTime = async (req, res) => {
-  const { time } = req.body;  
-  if (!time) {
-      return res.status(400).json({ message: "time is required" });
-  }
-
-  try {
-      const results = await Slot.findOne({time});
-      if (!results) {
-          return res.status(404).json({ message: "No data found for the given time" });
-      }
-      res.status(200).json(results);
-  } catch (error) {
-      
-      console.error("Got error while fetching data by id", error);
-      res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-
 
 exports.getDateAndSlots = async(req, res)=>{
 
