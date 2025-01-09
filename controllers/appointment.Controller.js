@@ -28,12 +28,13 @@ exports.BookingSlots = async(req, res)=>{
     const { date, time } = selectedSlot;
     const { _id: appointmentId } = newSlot; 
     const transporter = nodemailer.createTransport({
-      host: "mail.clouddatanetworks.com",
-      port: 465,
-      secure: true,
+      name: "hostgator",
+      host: "gator3008.hostgator.com",
+      port: 587,
+      secure: false,
       auth: {
-        user: "syndrome-noreply@clouddatanetworks.com",
-        pass: "CDN@Syndeo@",
+        user: "noreply-syndeo@clouddatanetworks.com",
+        pass: "CDN@syndeo",
       },
     });
 
@@ -228,6 +229,37 @@ exports.deleteAppointment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+exports.updateAppointment = async (req, res) => {
+
+  const { appointmentId, newDate, newTime } = req.body;
+  if (!appointmentId || !newDate || !newTime) {
+      return res.status(400).json({ message: "Missing required fields" });
+  }
+  try {
+      const updatedSlot = await Slot.findByIdAndUpdate(
+          appointmentId, 
+          {
+              date: new Date(newDate), 
+              time: newTime, 
+          },
+          { new: true } 
+      );
+      if (!updatedSlot) {
+          return res.status(404).json({ message: "Slot not found" });
+      }
+      res.status(200).json({
+          message: "Appointment updated successfully",
+          updatedSlot,
+      });
+  } catch (error) {
+      console.error("Error updating appointment:", error);
+      res.status(500).json({ message: "Server error" });
+  }
+}
+
+
 
 exports.getDateAndSlots = async(req, res)=>{
 

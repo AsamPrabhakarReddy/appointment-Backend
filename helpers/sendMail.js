@@ -24,14 +24,15 @@ const nodemailer = require("nodemailer");
 // }
 
 const transporter = nodemailer.createTransport({
-  host: "mail.clouddatanetworks.com",
-  port: 465,
-  // secure: true,
-  auth: {
-    user: "noreply-syndeo@clouddatanetworks.com",
-    pass: "CDN@syndeo",
-  },
-});
+      name: "hostgator",
+      host: "gator3008.hostgator.com",
+      port: 587,
+      // secure: true,
+      auth: {
+        user: "noreply-syndeo@clouddatanetworks.com",
+        pass: "CDN@syndeo",
+      },
+    });
 
 // async..await is not allowed in global scope, must use a wrapper
 async function sendMailToUser(to, subject, text, html) {

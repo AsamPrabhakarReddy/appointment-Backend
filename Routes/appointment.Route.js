@@ -9,6 +9,7 @@ router.post('/getDataById', appointmentController.getDataById);
 // router.post('/getData', appointmentController.getDataByTime);
 router.get('/getDateAndSlots', appointmentController.getDateAndSlots);
 router.post('/deleteAppointment', appointmentController.deleteAppointment);
+router.post('/updateAppointment', appointmentController.updateAppointment);
 
 module.exports = router;
 
