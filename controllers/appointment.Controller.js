@@ -116,7 +116,8 @@ exports.BookingSlots = async(req, res)=>{
                     cursor: pointer;          
                     font-size: 14px;          
                     margin-left: 15px; 
-                    margin-right: 5px;        
+                    margin-right: 5px; 
+
                   }
 
                 .btn-cancel-reschedule:hover {
@@ -147,7 +148,6 @@ exports.BookingSlots = async(req, res)=>{
                       ) : (
                         `<button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule">Cancel / Reschedule</a></button>`
                       )}
-                      <div class="field">Id: ${appointmentId}</div>
                       <div class="field">Name: ${name}</div>
                       <div class="field">Email: ${email}</div>
                     </div>
