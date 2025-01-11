@@ -39,7 +39,7 @@ exports.BookingSlots = async(req, res)=>{
     });
 
     var mailOptions = {
-      from: "info@alchemindssolutions.com",
+      from: "Mannam&Associates",
       to: email,
       subject: `Confirmed: Immigration Consultation @ ${date}, ${time}`,
       html: `<!DOCTYPE html>
@@ -86,7 +86,9 @@ exports.BookingSlots = async(req, res)=>{
                       flex-direction: column;
                       align-items: center;
                       gap: 15px;
+                      width: 100%; /* This ensures the container takes full width */
                     }
+
 
                     .details .field {
                       width: 80%;
