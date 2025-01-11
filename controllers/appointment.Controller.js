@@ -33,134 +33,141 @@ exports.BookingSlots = async(req, res)=>{
       port: 587,
       // secure: true,
       auth: {
-        user: "info@alchemindssolutions.com",
-        pass: "AMS@11539@ams!",
+        user: "noreply-syndeo@clouddatanetworks.com",
+        pass: "CDN@syndeo",
       },
     });
 
     var mailOptions = {
-      from: "info@alchemindssolutions.com",
+      from: "noreply-syndeo@clouddatanetworks.com",
       to: email,
       subject: `Confirmed: Immigration Consultation @ ${date}, ${time}`,
       html: `<!DOCTYPE html>
-              <html>
-                <head>
-                  <style>
-                    body {
-                      font-family: Arial, sans-serif;
-                      background-color: #f9fafb;
-                      margin: 0;
-                      padding: 0;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      min-height: 100vh;
-                    }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
 
-                    .container {
-                      max-width: 600px;
-                      width: 100%;
-                      background-color: #F1F5F9;
-                      border-radius: 8px;
-                      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                      padding: 20px;
-                      text-align: center;
-                    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #F1F5F9;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
 
-                    .header h1 {
-                      font-size: 24px;
-                      color: #AE275F; /* Unique color for "MANNAM AND ASSOCIATES" */
-                      margin-bottom: 20px;
-                    }
+    .header h1 {
+      font-size: 24px;
+      color: #AE275F;
+      margin-bottom: 20px;
+    }
 
-                    .content p.confirmation {
-                      font-size: 20px;
-                      color: #AE275F; /* Unique color for "Your booking has been confirmed!" */
-                      margin: 20px 0;
-                      font-weight: bold;
-                    }
+    .content p.confirmation {
+      font-size: 20px;
+      color: #AE275F;
+      margin: 20px 0;
+      font-weight: bold;
+    }
 
-                    .details {
-                      margin: 20px 0;
-                      display: flex;
-                      flex-direction: column;
-                      align-items: center;
-                      gap: 15px;
-                      width: 100%; /* This ensures the container takes full width */
-                    }
+    .details {
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;  /* Ensures vertical stacking */
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+    }
 
+    .details .field {
+      width: 80%; /* Adjust width for better alignment */
+      background-color: #f5f5f5;
+      padding: 10px 15px;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      font-size: 16px;
+      color: #333333;
+      font-weight: bold;
+    }
 
-                    .details .field {
-                      width: 80%;
-                      background-color: #f5f5f5;
-                      padding: 10px 15px;
-                      border: 1px solid #dddddd;
-                      border-radius: 5px;
-                      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                      text-align: center;
-                      font-size: 16px;
-                      color: #333333;
-                      font-weight: bold;
-                    }
+    .footer p {
+      font-size: 14px;
+      color: #AE275F;
+      margin-top: 20px;
+    }
 
-                    .footer p {
-                      font-size: 14px;
-                      color: #AE275F;
-                      margin-top: 20px;
-                    }
-                  .btn-cancel-reschedule {
-                    background-color: #28a745;  
-                    color: white;             
-                    font-weight: bold;        
-                    padding: 8px 16px;        
-                    border: none;             
-                    border-radius: 5px;       
-                    cursor: pointer;          
-                    font-size: 14px;          
-                    margin-left: 15px; 
-                    margin-right: 5px; 
+    .btn-cancel-reschedule {
+      background-color: #28a745;
+      color: white;
+      font-weight: bold;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none; /* Ensure the link inside the button doesn't affect styling */
+      margin-left: 15px;
+      margin-right: 5px;
+      width: 80%; /* Ensure the button has the same width as the fields */
+      display: inline-block;
+      text-align: center;
+    }
 
-                  }
+    .btn-cancel-reschedule:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
 
-                .btn-cancel-reschedule:hover {
-                  opacity: 0.9;
-                }  
-                </style>
-                </head>
-                <body>
-                  <div class="container">
-                    <!-- Header -->
-                    <div class="header">
-                      <h1>MANNAM AND ASSOCIATES</h1>
-                    </div>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>MANNAM AND ASSOCIATES</h1>
+  </div>
 
-                    <!-- Booking Confirmation -->
-                    <div class="content">
-                      <p class="confirmation">Your Consultation is Confirmed!</p>
-                    </div>
+  <!-- Booking Confirmation -->
+  <div class="content">
+    <p class="confirmation">Your Consultation is Confirmed!</p>
+  </div>
 
-                    <!-- Booking Details -->
-                  <div class="details">
-                      <div class="field">Service: ${service}</div>
-                      <div class="field">Staff Member: ${staffMember}</div>
-                      
-                      <!-- Date and Time field with the button -->
-                      ${appointmentId ? (
-                        `<button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule/${appointmentId}">Cancel / Reschedule</a></button>`
-                      ) : (
-                        `<button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule">Cancel / Reschedule</a></button>`
-                      )}
-                      <div class="field">Name: ${name}</div>
-                      <div class="field">Email: ${email}</div>
-                    </div>
-                    <!-- Footer -->
-                    <div class="footer">
-                      <p>- Team Syndèo</p>
-                    </div>
-                  </div>
-                </body>
-              </html>
-              `,
+  <!-- Booking Details -->
+  <div class="details">
+    <div class="field">Service: ${service}</div>
+    <div class="field">Staff Member: ${staffMember}</div>
+    
+    <!-- Date and Time field with the button -->
+    ${appointmentId ? (
+      `<button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule/${appointmentId}">Cancel / Reschedule</a></button>`
+    ) : (
+      `<button class="btn-cancel-reschedule"><a href="https://mannam-syndeo-ui.vercel.app/cancel-reschedule">Cancel / Reschedule</a></button>`
+    )}
+    <div class="field">Name: ${name}</div>
+    <div class="field">Email: ${email}</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>- Team Syndèo</p>
+  </div>
+</div>
+
+</body>
+</html>`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
