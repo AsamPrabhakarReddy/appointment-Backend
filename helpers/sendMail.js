@@ -29,8 +29,8 @@ const transporter = nodemailer.createTransport({
       port: 587,
       // secure: true,
       auth: {
-        user: "noreply-syndeo@clouddatanetworks.com",
-        pass: "CDN@syndeo",
+        user: "info@alchemindssolutions.com",
+        pass: "AMS@11539@ams!",
       },
     });
 
