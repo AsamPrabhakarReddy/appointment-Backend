@@ -39,7 +39,7 @@ exports.BookingSlots = async(req, res)=>{
     });
 
     var mailOptions = {
-      from: "Mannam&Associates",
+      from: "info@alchemindssolutions.com",
       to: email,
       subject: `Confirmed: Immigration Consultation @ ${date}, ${time}`,
       html: `<!DOCTYPE html>
