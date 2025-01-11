@@ -31,15 +31,15 @@ exports.BookingSlots = async(req, res)=>{
       name: "hostgator",
       host: "gator3008.hostgator.com",
       port: 587,
-      secure: false,
+      // secure: true,
       auth: {
-        user: "noreply-syndeo@clouddatanetworks.com",
-        pass: "CDN@syndeo",
+        user: "info@alchemindssolutions.com",
+        pass: "AMS@11539@ams!",
       },
     });
 
     var mailOptions = {
-      from: "info@syndeo.com",
+      from: "info@alchemindssolutions.com",
       to: email,
       subject: `Confirmed: Immigration Consultation @ ${date}, ${time}`,
       html: `<!DOCTYPE html>
